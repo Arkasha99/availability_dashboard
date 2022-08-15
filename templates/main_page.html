@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>title</title>
+    <link rel="stylesheet" href="style.css">
+<style>
+  body,html {
+    margin: 0;
+    font-family: sans-serif;
+  }
+
+  ul {
+    padding: 0;
+    width: 100%;
+  }
+
+  li {
+    /* display: inline; */
+    margin-bottom: 10px;
+  }
+
+  a {
+    outline: none;
+    text-decoration: none;
+    display: inline-block;
+    width: 19.5%;
+    margin-right: 0.625%;
+    text-align: center;
+    line-height: 3;
+    color: black;
+  }
+
+  li:last-child a {
+    margin-right: 0;
+  }
+
+  a:link, a:visited, a:focus {
+    background: yellow;
+  }
+
+  a:hover {
+    background: orange;
+  }
+
+  a:active {
+    background: red;
+    color: white;
+  }
+
+</style>
+  </head>
+  <body>
+    <h1> ДАШБОРД ДОСТУПНОСТИ</h1>
+    <ul>
+      <!-- <li><a href="products_all">Доступность всех туров</a></li> -->
+      <li><a href="#">Поиск доступности по названию тура
+            <form name="search" action='/product' method="GET">
+              <p>Введите название тура: </p>
+              <input type="text" name="tour_title">
+              <button type='submit'>Поиск</button>
+            </form>
+      </a>
+
+      </li>
+      <!-- <li><a href="#">Доступность туров без билетов</a></li>
+      <li><a href="/products_date_only">Доступность туров с DATE ONLY билетами</a></li>
+      <li><a href="/products_timeslot">Доступность туров с билетами по таймслотам</a></li> -->
+      <!-- <li><a href="#">Доступность туров на ручной закупке</a></li>
+      <li><a href="#">Доступность туров с тикетса</a></li>
+      <li><a href="#">Доступность туров на парсере</a></li> -->
+    </ul>
+
+  </body>
+</html>

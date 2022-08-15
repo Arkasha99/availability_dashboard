@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>title</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+
+    }
+
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+
+    </style>
+  </head>
+  <body>
+{% for error in errors %}
+  {{error}} <br>
+{% endfor %}
+
+{% for result, column_name_for_result,tour_title in all_data %}
+  <h1> Доступность для тура {{tour_title}}</h1>
+    <table name="table1">
+  <TR class="parent">
+     <TD class="c1">Дата</TD>
+     <TD class="c1">Время</TD>
+     <TD class="c1">Доступность</TD>
+     {% for column in column_name_for_result %}
+     <TD class="c1">{{column}}</TD>
+     {% endfor %}
+  </TR>
+  {% for index, row in result.iterrows() %}
+  <TR class="box">
+     <TD class="c1">{{row['start_date']}}</TD>
+     <TD class="c1">{{row['start_time']}}</TD>
+     <TD class="c1">{{row['available']}}</TD>
+     {% for column in column_name_for_result %}
+
+     <TD class="c1" >{{row[column]}}</TD>
+      {% endfor %}
+  </TR>
+  {% endfor %}
+</table>
+  {% endfor %}
+  <br><br>
+  </body>
+</html>
