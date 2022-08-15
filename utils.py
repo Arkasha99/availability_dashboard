@@ -416,14 +416,13 @@ def match_data_one_product_date_only(true_data, list_df_availability):
     return result, errors
 
 # Получить полностью готовый результат для одного продукта
-def get_result_one_product(product_id):
-    #get_true_data_all().to_csv('all.csv')
-    true_data_df = get_true_data_one_product(product_id) # истинные данные
-    product_codes_df = get_product_codes_one_product(product_id) # данные кодов продукта для маркетплейсов
-    product_codes_df = product_codes_df[product_codes_df['marketplace'].isin(['Viator', 'Sputnik8', 'Musement'])] # Пока ограничиваемся тремя маркетплейсами
-
+def get_result_one_product(product_id, true_data_df, product_codes_df):
+    true_data_df = true_data_df[true_data_df['product_id'] == product_id]
+    true_data_df = true_data_df.reset_index()[['available', 'product_name', 'booking_type',
+       'product_id', 'timezone_name', 'start_date','start_time']]
+    product_codes_df = product_codes_df[product_codes_df['product_id'] == product_id]
     list_df_availability = [] # список с датафреймами с доступностью для каждого кода продукта или с ошибками
-
+    print(product_codes_df['marketplace'])
     # для каждого кода продукта
     for index, row in  product_codes_df.iterrows():
         if row['marketplace'] == 'Viator':
@@ -438,3 +437,20 @@ def get_result_one_product(product_id):
     else:
         result, errors = match_data_one_product_date_only(true_data_df, list_df_availability)
     return (result, errors)
+
+def get_result_all(product_id_all, true_data_df, product_codes_df):
+    results_all_list = []
+    errors_all_list = []
+    count = 1
+    for product_id in product_id_all:
+        print(product_id)
+        print(f'{count} / {len(product_id_all)}')
+        try:
+            result_one, errors_one = get_result_one_product(int(product_id), true_data_df, product_codes_df)
+            results_all_list.append(result_one)
+            errors_all_list.append(errors_one)
+        except:
+            errors_all_list.append(f"НЕ УДАЛОСЬ НАЙТИ ИНФОРМАЦИЮ ДЛЯ {product_id}")
+            print(f"НЕ УДАЛОСЬ НАЙТИ ИНФОРМАЦИЮ ДЛЯ {product_id}")
+        count+=1
+    return results_all_list, errors_all_list
